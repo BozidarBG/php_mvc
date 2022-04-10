@@ -1,0 +1,74 @@
+
+SET GLOBAL default_storage_engine = 'InnoDB';
+
+CREATE TABLE IF NOT EXISTS `users` (
+  	 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   	 `name` VARCHAR(100) NOT NULL,
+   	 `email` VARCHAR(150) NOT NULL UNIQUE,
+   	 `password` VARCHAR(255) NOT NULL,
+   	 `verify_token` VARCHAR(50),
+   	 `remember_token` VARCHAR(150) NULL,
+	 `role` TINYINT(2) DEFAULT 0,
+  	 `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  	 `updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now()
+);
+
+CREATE TABLE IF NOT EXISTS `teachers` (
+  	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	`name` VARCHAR(150) NOT NULL,
+  	`about` TEXT NOT NULL,
+  	`photo` VARCHAR(250) NULL,
+  	`created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  	`updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now()
+);
+
+CREATE TABLE IF NOT EXISTS `courses` (
+  	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    	`name` VARCHAR(100) NOT NULL,
+    	`slug` VARCHAR(100) NOT NULL,
+  	    `content` TEXT NOT NULL,
+    	`short` VARCHAR(250) NOT NULL,
+    	`duration` TINYINT(2) NOT NULL,
+    	`lectures` SMALLINT(4) NOT NULL,
+  	`price` DOUBLE(6,2) NOT NULL,
+  	`photo` VARCHAR(250) NULL,
+  	`created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  	`updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now()
+);
+
+
+CREATE TABLE IF NOT EXISTS `courses_teachers` (
+  	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `course_id` INT(10) NOT NULL,
+	`teacher_id` INT(10) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `questions` (
+  	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`answered` BOOLEAN NOT NULL DEFAULT FALSE,
+	`first_name` VARCHAR(100) NOT NULL,
+	`last_name` VARCHAR(100) NOT NULL,
+   	`phone` VARCHAR(20) NOT NULL,
+   	`email` VARCHAR(150) NOT NULL,
+   	`question` TEXT NOT NULL,
+  	`created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  	`updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now()
+);
+
+CREATE TABLE IF NOT EXISTS `settings` (
+  	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`prop_name` VARCHAR(30) NOT NULL,
+	`prop_value` VARCHAR(250) NOT NULL,
+  	`created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  	`updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now()
+);
+
+CREATE TABLE IF NOT EXISTS `applications` (
+  	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `course_id` INT(10) NOT NULL,
+    `user_id` INT(10) NOT NULL,
+    `answered` BOOLEAN DEFAULT false,
+  	`created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  	`updated_at` TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE now()
+);
+

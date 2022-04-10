@@ -1,0 +1,1 @@
+12.11.2021 00:36:13 message: "\"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'harden@gmail.com' for key 'email'\""
